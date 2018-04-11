@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import STATICBOOKS from './staticBooks'
 /*
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -9,26 +8,20 @@ import MenuItem from 'material-ui/MenuItem';
 class SelectShelf extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
-    bookshelf: PropTypes.string.isRequired
+    bookshelf: PropTypes.string.isRequired,
+    onShelfChange: PropTypes.func.isRequired
   }
-
-  constructor(props) {
-    super(props)
-    //this.setState({value: props.bookshelf})
-  }
-
-  handleChange = (event, index, value) => this.setState({value})
 
   render() {
-    const { book, bookshelf } = this.props
+    const { book, bookshelf, onShelfChange } = this.props
 
     return (
     <div className="book-shelf-changer">
-      <select value={bookshelf} onChange={this.handleChange}>
+      <select value={bookshelf} onChange={() => this.onShelfChange(bookshelf)}>
         <option value="none" disabled>Move to...</option>
-        <option value="currentlyReading">Currently Reading</option>
-        <option value="wantToRead">Want to Read</option>
-        <option value="read">Read</option>
+        <option value="Currently Reading">Currently Reading</option>
+        <option value="Want To Read">Want to Read</option>
+        <option value="Read">Read</option>
         <option value="none">None</option>
       </select>
     </div>

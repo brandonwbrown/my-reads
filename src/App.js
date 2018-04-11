@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import STATICBOOKS from './staticBooks'
 import ListShelf from './ListShelf'
@@ -17,6 +16,14 @@ class App extends Component {
   books: STATICBOOKS
   }
 
+  handleShelfChange(book, e) {
+    let prevState = this.state.books.slice()
+    let change = prevState.filter((b) => (b.id === book.id))
+      .map((b) => (b.bookshelf = e.target.value))
+    console.log(change)
+    this.setState({books: change})
+  }
+
   render() {
     return (
       <div className="App">
@@ -26,10 +33,22 @@ class App extends Component {
         <div className="list-books">
           <div className="list-books-content">
             <div>
-              <ListShelf books={STATICBOOKS} bookshelf="currentlyReading" shelfDisplayName="Currently Reading"/>
-              <ListShelf books={STATICBOOKS} bookshelf="wantToRead" shelfDisplayName="Want To Read"/>
-              <ListShelf books={STATICBOOKS} bookshelf="read" shelfDisplayName="Read"/>
-            </div>
+              <ListShelf
+                books={STATICBOOKS}
+                shelfname="Currently Reading"
+                bookshelf={this.state.books.bookshelf}
+                onShelfChange={this.handSelfChange}/>
+              <ListShelf
+                books={STATICBOOKS}
+                shelfname="Want To Read"
+                bookshelf={this.state.books.bookshelf}
+                onShelfChange={this.handleShelfChange}/>
+              <ListShelf
+                books={STATICBOOKS}
+                shelfname="Read"
+                bookshelf={this.state.books.bookshelf}
+                onShelfChange={this.handleShelfChange}/>
+          </div>
           </div>
           <div className="open-search">
             <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
