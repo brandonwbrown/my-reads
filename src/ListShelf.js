@@ -1,35 +1,24 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import SelectShelf from './SelectShelf'
+import Book from './Book.js'
 
 class ListShelf extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    shelfname: PropTypes.string.isRequired,
-    bookshelf: PropTypes.string.isRequired,
-    onShelfChange: PropTypes.func.isRequired
+    bookshelf: PropTypes.string.isRequired
   }
 
   render() {
-    const { books, bookshelf, shelfname, onShelfChange } = this.props
+    const { books, bookshelf } = this.props
 
     return (
         <div className="bookshelf">
-          <h2 className="bookshelf-title">{shelfname}</h2>
+          <h2 className="bookshelf-title">{bookshelf}</h2>
           <div className="bookshelf-books">
             <ol className="books-grid">
-              {books.filter((b) => (b.bookshelf === shelfname))
+              {books.filter((b) => (b.bookshelf === bookshelf))
                 .map((book) => (
-                <li key={book.id}>
-                  <div className="book">
-                    <div className="book-top">
-                      <div className="book-cover" style={{ width: book.width, height: book.height, backgroundImage: book.backgroundImage }}></div>
-                        <SelectShelf book={book} bookshelf={book.bookshelf} onShelfChange={() => this.onShelfChange(bookshelf)}/>
-                    </div>
-                    <div className="book-title">{book.title}</div>
-                    <div className="book-authors">{book.author}</div>
-                  </div>
-                </li>
+                <Book book={book} bookshelf={bookshelf}/>
               ))}
             </ol>
           </div>

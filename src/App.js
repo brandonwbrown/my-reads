@@ -5,9 +5,7 @@ import ListShelf from './ListShelf'
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
       /**
        * TODO: Instead of using this state variable to keep track of which page
        * we're on, use the URL in the browser's address bar. This will ensure that
@@ -16,17 +14,6 @@ class App extends Component {
        */
       showSearchPage: false,
       books: STATICBOOKS
-    }
-    // This binding is necessary to make `this` work in the callback
-    this.handleShelfChange = this.handleShelfChange.bind(this);
-  }
-
-  handleShelfChange(book, e) {
-    let prevState = this.state.books.slice()
-    let change = prevState.filter((b) => (b.id === book.id))
-      .map((b) => (b.bookshelf = e.target.value))
-    console.log(change)
-    this.setState({books: change})
   }
 
   render() {
@@ -39,20 +26,14 @@ class App extends Component {
           <div className="list-books-content">
             <div>
               <ListShelf
-                books={STATICBOOKS}
-                shelfname="Currently Reading"
-                bookshelf={this.state.books.bookshelf}
-                onShelfChange={this.handSelfChange}/>
+                books={this.state.books}
+                bookshelf="Currently Reading"/>
               <ListShelf
-                books={STATICBOOKS}
-                shelfname="Want To Read"
-                bookshelf={this.state.books.bookshelf}
-                onShelfChange={this.handleShelfChange}/>
+                books={this.state.books}
+                bookshelf="Want To Read"/>
               <ListShelf
-                books={STATICBOOKS}
-                shelfname="Read"
-                bookshelf={this.state.books.bookshelf}
-                onShelfChange={this.handleShelfChange}/>
+                books={this.state.books}
+                bookshelf="Read"/>
           </div>
           </div>
           <div className="open-search">
