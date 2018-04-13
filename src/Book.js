@@ -5,18 +5,19 @@ import SelectShelf from './SelectShelf'
 class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
-    bookshelf: PropTypes.string.isRequired
+    bookshelf: PropTypes.string.isRequired,
+    onShelfChange: PropTypes.func.isRequired
   }
 
   render() {
-    const { book, bookshelf } = this.props
+    const { book, bookshelf, onShelfChange } = this.props
 
     return (
       <li key={book.id}>
         <div className="book">
           <div className="book-top">
             <div className="book-cover" style={{ width: book.width, height: book.height, backgroundImage: book.backgroundImage }}></div>
-              <SelectShelf book={book} bookshelf={bookshelf}/>
+              <SelectShelf book={book} bookshelf={bookshelf} onShelfChange={onShelfChange}/>
           </div>
           <div className="book-title">{book.title}</div>
           <div className="book-authors">{book.author}</div>

@@ -9,25 +9,15 @@ class SelectShelf extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
     bookshelf: PropTypes.string.isRequired,
+    onShelfChange: PropTypes.func.isRequired
   }
 
-  onShelfChangeHandler = (book, event) => {
-     const newShelf = event.target.value;
-     /* Check if the shelf is actually changed. If it is pass on the callback to onShelfChanged else ignore */
-     if (newShelf !== book.bookshelf) {
-       console.log(newShelf)
-       this.state.books.filter((b) => (b.book === book)).map((b) =>(
-         this.setState({b: newShelf})
-       ))
-     }
-  };
-
   render() {
-    const { book, bookshelf } = this.props
+    const { book, bookshelf, onShelfChange } = this.props
 
     return (
     <div className="book-shelf-changer">
-      <select value={bookshelf} onChange={this.onShelfChangeHandler(book)}>
+      <select value={bookshelf} onChange={onShelfChange}>
         <option value="none" disabled>Move to...</option>
         <option value="Currently Reading">Currently Reading</option>
         <option value="Want To Read">Want to Read</option>

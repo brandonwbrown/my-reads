@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import STATICBOOKS from './staticBooks'
 import ListShelf from './ListShelf'
+import * as BooksAPI from './BooksAPI'
 
 
 class App extends Component {
@@ -16,6 +17,16 @@ class App extends Component {
       books: STATICBOOKS
   }
 
+  onShelfChangeHandler = (book, event) => {
+     const newShelf = event.target.value;
+     if (newShelf !== book.bookshelf) {
+       console.log(newShelf)
+       this.state.books.filter((b) => (b.book === book)).map((b) =>(
+         this.setState({b: newShelf})
+       ))
+     }
+  };
+
   render() {
     return (
       <div className="App">
@@ -27,13 +38,16 @@ class App extends Component {
             <div>
               <ListShelf
                 books={this.state.books}
-                bookshelf="Currently Reading"/>
+                bookshelf="Currently Reading"
+                onShelfChange={this.onShelfChangeHandler}/>
               <ListShelf
                 books={this.state.books}
-                bookshelf="Want To Read"/>
+                bookshelf="Want To Read"
+                onShelfChange={this.onShelfChangeHandler}/>
               <ListShelf
                 books={this.state.books}
-                bookshelf="Read"/>
+                bookshelf="Read"
+                onShelfChange={this.onShelfChangeHandler}/>
           </div>
           </div>
           <div className="open-search">
