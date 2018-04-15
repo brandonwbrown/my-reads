@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 import STATICBOOKS from './staticBooks'
 import ListShelf from './ListShelf'
-import * as BooksAPI from './BooksAPI'
+//import * as BooksAPI from './BooksAPI'
 
 
 class App extends Component {
@@ -17,14 +17,14 @@ class App extends Component {
       books: STATICBOOKS
   }
 
-  onShelfChangeHandler = (book, event) => {
-     const newShelf = event.target.value;
-     if (newShelf !== book.bookshelf) {
-       console.log(newShelf)
-       this.state.books.filter((b) => (b.book === book)).map((b) =>(
-         this.setState({b: newShelf})
-       ))
-     }
+  onShelfChangeHandler = (book, shelf) => {
+    if (shelf !== book.bookshelf) {
+      let newState = this.state.books.filter((b) => (b.id !== book.id))
+      let updatedBook = book
+      updatedBook['bookshelf'] = shelf
+      newState.push(updatedBook)
+      this.setState({books: newState})
+    }
   };
 
   render() {
@@ -39,25 +39,30 @@ class App extends Component {
               <ListShelf
                 books={this.state.books}
                 bookshelf="Currently Reading"
-                onShelfChange={this.onShelfChangeHandler}/>
+                onShelfChange={
+                  (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
               <ListShelf
                 books={this.state.books}
                 bookshelf="Want To Read"
-                onShelfChange={this.onShelfChangeHandler}/>
+                onShelfChange={
+                  (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
               <ListShelf
                 books={this.state.books}
                 bookshelf="Read"
-                onShelfChange={this.onShelfChangeHandler}/>
+                onShelfChange={
+                  (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
           </div>
           </div>
           <div className="open-search">
-            <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+            <a onClick={() => this.setState({ showSearchPage: true })}>
+              Add a book
+            </a>
           </div>
         </div>
-        )}
       </div>
-    );
-  }
+    )
+  };
 }
+
 
 export default App;

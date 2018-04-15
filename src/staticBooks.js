@@ -1,22 +1,3 @@
-// /**
-// * @description Represents a book
-// * @constructor
-// * @param {string} image - The url of the google image for the book
-// * @param {string} title - The title of the book
-// * @param {string} author - The author of the book
-// */
-// class Book {
-//   constructor(image, title, author, bookshelf){
-//       this.width = 128
-//       this.height = 192
-//       this.backgroundImage = image
-//       this.title = title
-//       this.author = author
-//       this.bookshelf = ''
-//   }
-// }
-
-
 const STATICBOOKS = [
     {id: 1, width: 128, height: 192, title: "Ender's Game", author: "Orson Scott Card", bookshelf: "Currently Reading", backgroundImage: 'url("http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api")'},
     {id: 2, width: 128, height: 192, title: "To Kill a Mockingbird", author: "Harder Lee", bookshelf: "Currently Reading", backgroundImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")'},
