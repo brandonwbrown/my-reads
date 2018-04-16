@@ -36,7 +36,8 @@ class App extends Component {
       let updatedBook = book
       updatedBook['shelf'] = shelf
       newState.push(updatedBook)
-      this.setState({books: newState})
+      BooksAPI.update(book, shelf)
+        .then(this.setState({books: newState}))
     }
   };
 
