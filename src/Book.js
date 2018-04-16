@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import SelectShelf from './SelectShelf'
+import noImage from './img/no-thumbnail-found.jpg';
 
 class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
-    bookshelf: PropTypes.string.notRequired,
+    bookshelf: PropTypes.string,
     onShelfChange: PropTypes.func.isRequired
   }
 
@@ -26,8 +27,11 @@ class Book extends Component {
                 {
                   width: 128,
                   height: 192,
-                  backgroundImage: 'url('+book.imageLinks.thumbnail+')'
-                }}>
+                  backgroundImage:
+                    (book.imageLinks ?
+                    'url('+book.imageLinks.thumbnail+')' :
+                    'url('+noImage+')')
+              }}>
               </div>
               <SelectShelf
                 book={book}
@@ -35,12 +39,16 @@ class Book extends Component {
                 onShelfChange={
                   (book, shelf) => this.onShelfChange(book, shelf)}/>
           </div>
-          <div className="book-title">
-            {book.title}
-          </div>
-          <div className="book-authors">{
-              book.authors.map((a, index) => ((index ? ', ':'') + a))}
-          </div>
+          { book.title &&
+            <div className="book-title">
+              {book.title}
+            </div>
+          }
+          { book.authors &&
+            <div className="book-authors">{
+                book.authors.map((a, index) => ((index ? ', ':'') + a))}
+            </div>
+          }
         </div>
       </li>
     )

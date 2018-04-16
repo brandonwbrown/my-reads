@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Book from './Book.js'
 import { Link } from 'react-router-dom'
+import * as BooksAPI from './BooksAPI'
 
 
 class Search extends Component {
@@ -11,7 +12,24 @@ class Search extends Component {
   }
 
   state = {
-    searchTerm : ''
+    searchTerm : '',
+    displayBooks : this.props.books,
+    emptyResult : true
+  }
+
+  handleTextChange(e){
+    this.setState({searchTerm: e.target.value})
+    if(e.target.value){
+      BooksAPI.search(e.target.value)
+        .then((newBooks) => {
+          if(newBooks.error){
+            this.setState({emptyResult: true})
+          }else{
+            console.log("New Books:" + JSON.stringify(newBooks))
+            this.setState({displayBooks: newBooks})
+          }
+        })
+    }
   }
 
   onShelfChange(book, shelf){
@@ -19,7 +37,6 @@ class Search extends Component {
   }
 
   render() {
-    const { books } = this.props
 
     return (
       <div className="search-books">
@@ -34,21 +51,25 @@ class Search extends Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" placeholder="Search by title or author"/>
-
+            <input
+              type="text"
+              value={this.state.searchTerm}
+              onChange={this.handleTextChange.bind(this)}
+              placeholder="Search by title or author" />
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {books
-              .map((book) => (
+            {this.state.displayBooks &&
+              this.state.displayBooks.map((book) => (
                 <Book
                   key={book.id}
                   book={book}
                   bookshelf={book.shelf}
                   onShelfChange={
                     (book, shelf) => this.onShelfChange(book, shelf)}/>
-            ))}
+              ))
+            }
           </ol>
         </div>
       </div>

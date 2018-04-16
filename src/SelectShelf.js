@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 class SelectShelf extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
-    bookshelf: PropTypes.string.isRequired,
+    bookshelf: PropTypes.string,
     onShelfChange: PropTypes.func.isRequired
   }
 
