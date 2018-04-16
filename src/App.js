@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import './App.css'
-import STATICBOOKS from './staticBooks'
+//import STATICBOOKS from './staticBooks'
 import ListShelf from './ListShelf'
-//import * as BooksAPI from './BooksAPI'
+import Search from './Search'
+import * as BooksAPI from './BooksAPI'
+import { Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 class App extends Component {
@@ -14,14 +17,24 @@ class App extends Component {
        * pages, as well as provide a good URL they can bookmark and share.
        */
       showSearchPage: false,
-      books: STATICBOOKS
+      books: []
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll()
+      .then((books) => {
+        this.setState(() => ({
+          books
+        }))
+        console.log(JSON.stringify(books))
+      })
   }
 
   onShelfChangeHandler = (book, shelf) => {
-    if (shelf !== book.bookshelf) {
+    if (shelf !== book.shelf) {
       let newState = this.state.books.filter((b) => (b.id !== book.id))
       let updatedBook = book
-      updatedBook['bookshelf'] = shelf
+      updatedBook['shelf'] = shelf
       newState.push(updatedBook)
       this.setState({books: newState})
     }
@@ -33,32 +46,44 @@ class App extends Component {
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
-        <div className="list-books">
-          <div className="list-books-content">
-            <div>
-              <ListShelf
-                books={this.state.books}
-                bookshelf="Currently Reading"
-                onShelfChange={
-                  (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
-              <ListShelf
-                books={this.state.books}
-                bookshelf="Want To Read"
-                onShelfChange={
-                  (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
-              <ListShelf
-                books={this.state.books}
-                bookshelf="Read"
-                onShelfChange={
-                  (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
-          </div>
-          </div>
-          <div className="open-search">
-            <a onClick={() => this.setState({ showSearchPage: true })}>
-              Add a book
-            </a>
-          </div>
+        <Route exact path='/' render={() => (
+          <div className="list-books">
+            <div className="list-books-content">
+              <div>
+                <ListShelf
+                  books={this.state.books}
+                  bookshelf="currentlyReading"
+                  shelfname ="Currently Reading"
+                  onShelfChange={
+                    (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
+                <ListShelf
+                  books={this.state.books}
+                  bookshelf="wantToRead"
+                  shelfname="Want To Read"
+                  onShelfChange={
+                    (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
+                <ListShelf
+                  books={this.state.books}
+                  bookshelf="read"
+                  shelfname="Read"
+                  onShelfChange={
+                    (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
+              </div>
+            </div>
+            <div className='open-search'>
+              <Link to='/search'>Add a Book</Link>
+            </div>
         </div>
+        )} />
+        <Route path='/search' render={({ history }) => (
+          <Search
+            books={this.state.books}
+            onShelfChange={(book, shelf) => {
+              this.onShelfChangeHandler(book, shelf)
+              history.push('/')
+            }}
+          />
+        )}/>
       </div>
     )
   };

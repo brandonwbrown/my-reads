@@ -6,6 +6,7 @@ class ListShelf extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     bookshelf: PropTypes.string.isRequired,
+    shelfname: PropTypes.string.isRequired,
     onShelfChange: PropTypes.func.isRequired
   }
 
@@ -14,15 +15,15 @@ class ListShelf extends Component {
   }
 
   render() {
-    const { books, bookshelf } = this.props
+    const { books, bookshelf, shelfname } = this.props
 
     return (
       <div className="bookshelf">
-        <h2 className="bookshelf-title">{bookshelf}</h2>
+        <h2 className="bookshelf-title">{shelfname}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
             {books
-              .filter((b) => (b.bookshelf === bookshelf))
+              .filter((b) => (b.shelf === bookshelf))
               .map((book) => (
                 <Book
                   key={book.id}
