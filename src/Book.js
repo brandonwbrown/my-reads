@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import SelectShelf from './SelectShelf'
 import noImage from './img/no-thumbnail-found.jpg';
 
+
 class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,

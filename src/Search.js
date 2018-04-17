@@ -19,15 +19,12 @@ class Search extends Component {
 
   handleTextChange(e){
     this.setState({searchTerm: e.target.value})
-    console.log("searching for: " + e.target.value)
     if(e.target.value){
       BooksAPI.search(e.target.value)
         .then((searchResults) => {
           if(searchResults.error){
             this.setState({emptyResult: true})
           }else{
-            console.log("New Books:" + JSON.stringify(searchResults))
-            /* TODO merge books prop with search result based on ID */
             searchResults.map(result => {
               const book = this.props.books.find(b => b.id === result.id);
               if (book) result.shelf = book.shelf;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-//import STATICBOOKS from './staticBooks'
 import ListShelf from './ListShelf'
 import Search from './Search'
 import * as BooksAPI from './BooksAPI'
@@ -20,7 +19,6 @@ class App extends Component {
         this.setState(() => ({
           books
         }))
-        console.log(JSON.stringify(books))
       })
   }
 
@@ -84,6 +82,7 @@ class App extends Component {
       </div>
     )
   };
+
 }
 
 

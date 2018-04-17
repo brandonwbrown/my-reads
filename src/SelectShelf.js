@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-/*
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
-*/
+
 
 class SelectShelf extends Component {
   static propTypes = {
@@ -20,26 +17,18 @@ class SelectShelf extends Component {
     const { bookshelf } = this.props
 
     return (
-    <div className="book-shelf-changer">
-      <select value={bookshelf} onChange={(e) => this.onShelfChange(e)}>
-        <option value="none" disabled>Move to...</option>
-        <option value="currentlyReading">Currently Reading</option>
-        <option value="wantToRead">Want to Read</option>
-        <option value="read">Read</option>
-        <option value="None" selected="selected">None</option>
-      </select>
-    </div>
-/*
-    <div className="book-shelf-changer">
-      <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-        <MenuItem value="none" disabled="true" primaryText="Move to..." />
-        <MenuItem value="currentlyReading" primaryText="Currently Reading" />
-        <MenuItem value="wantToRead" primaryText="Want to Read" />
-        <MenuItem value="read" primaryText="Read" />
-        <MenuItem value="none" primaryText="None" />
-      </DropDownMenu>
-*/
-    )}
+      <div className="book-shelf-changer">
+        <select value={bookshelf} onChange={(e) => this.onShelfChange(e)}>
+          <option value="none" disabled>Move to...</option>
+          <option value="currentlyReading">Currently Reading</option>
+          <option value="wantToRead">Want to Read</option>
+          <option value="read">Read</option>
+          <option value="None" selected="selected">None</option>
+        </select>
+      </div>
+    )
+  }
+
 }
 
 export default SelectShelf
