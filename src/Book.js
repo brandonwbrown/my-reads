@@ -39,16 +39,14 @@ class Book extends Component {
                 onShelfChange={
                   (book, shelf) => this.onShelfChange(book, shelf)}/>
           </div>
-          { book.title &&
             <div className="book-title">
-              {book.title}
+              {(book.title ? book.title : "Unknown Title")}
             </div>
-          }
-          { book.authors &&
-            <div className="book-authors">{
-                book.authors.map((a, index) => ((index ? ', ':'') + a))}
+            <div className="book-authors">
+                {(book.authors ?
+                    book.authors.map((a, index) => ((index ? ', ':'') + a))
+                    : "Unknown Author")}
             </div>
-          }
         </div>
       </li>
     )

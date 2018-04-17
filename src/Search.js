@@ -13,22 +13,31 @@ class Search extends Component {
 
   state = {
     searchTerm : '',
-    displayBooks : this.props.books,
+    displayBooks : [],
     emptyResult : true
   }
 
   handleTextChange(e){
     this.setState({searchTerm: e.target.value})
+    console.log("searching for: " + e.target.value)
     if(e.target.value){
       BooksAPI.search(e.target.value)
-        .then((newBooks) => {
-          if(newBooks.error){
+        .then((searchResults) => {
+          if(searchResults.error){
             this.setState({emptyResult: true})
           }else{
-            console.log("New Books:" + JSON.stringify(newBooks))
-            this.setState({displayBooks: newBooks})
+            console.log("New Books:" + JSON.stringify(searchResults))
+            /* TODO merge books prop with search result based on ID */
+            searchResults.map(result => {
+              const book = this.props.books.find(b => b.id === result.id);
+              if (book) result.shelf = book.shelf;
+              return result;
+            })
+            this.setState({displayBooks: searchResults, emptyResult: false})
           }
         })
+    }else{
+      this.setState({emptyResult: true})
     }
   }
 
@@ -43,14 +52,6 @@ class Search extends Component {
         <div className="search-books-bar">
           <Link className="close-search" to='/'></Link>
           <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
             <input
               type="text"
               value={this.state.searchTerm}
@@ -58,20 +59,26 @@ class Search extends Component {
               placeholder="Search by title or author" />
           </div>
         </div>
-        <div className="search-books-results">
-          <ol className="books-grid">
-            {this.state.displayBooks &&
-              this.state.displayBooks.map((book) => (
-                <Book
-                  key={book.id}
-                  book={book}
-                  bookshelf={book.shelf}
-                  onShelfChange={
-                    (book, shelf) => this.onShelfChange(book, shelf)}/>
-              ))
-            }
-          </ol>
-        </div>
+        {this.state.emptyResult ?
+          (<div className="search-books-results">
+            No Results matching your query...
+          </div>)
+          :
+          (<div className="search-books-results">
+            <ol className="books-grid">
+              {this.state.displayBooks &&
+                this.state.displayBooks.map((book) => (
+                  <Book
+                    key={book.id}
+                    book={book}
+                    bookshelf={book.shelf}
+                    onShelfChange={
+                      (book, shelf) => this.onShelfChange(book, shelf)}/>
+                ))
+              }
+            </ol>
+          </div>)
+        }
       </div>
     )
   }

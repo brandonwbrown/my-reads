@@ -26,10 +26,11 @@ class SelectShelf extends Component {
         <option value="currentlyReading">Currently Reading</option>
         <option value="wantToRead">Want to Read</option>
         <option value="read">Read</option>
-        <option value="none">None</option>
+        <option value="None" selected="selected">None</option>
       </select>
     </div>
 /*
+    <div className="book-shelf-changer">
       <DropDownMenu value={this.state.value} onChange={this.handleChange}>
         <MenuItem value="none" disabled="true" primaryText="Move to..." />
         <MenuItem value="currentlyReading" primaryText="Currently Reading" />
