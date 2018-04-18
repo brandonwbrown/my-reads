@@ -13,6 +13,13 @@ class App extends Component {
       books: []
   }
 
+/* The shelf status and the shelf display names aren't the same unfortunately*/
+  shelves = {
+    currentlyReading : ["Currently Reading", "currentlyReading"],
+    wantToRead : ["Want To Read", "wantToRead"],
+    read : ["Read", "read"]
+  }
+
   componentDidMount() {
     BooksAPI.getAll()
       .then((books) => {
@@ -44,24 +51,16 @@ class App extends Component {
             <div className="list-books">
               <div className="list-books-content">
                 <div>
-                  <ListShelf
-                    books={this.state.books}
-                    bookshelf="currentlyReading"
-                    shelfname ="Currently Reading"
-                    onShelfChange={
-                      (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
-                  <ListShelf
-                    books={this.state.books}
-                    bookshelf="wantToRead"
-                    shelfname="Want To Read"
-                    onShelfChange={
-                      (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
-                  <ListShelf
-                    books={this.state.books}
-                    bookshelf="read"
-                    shelfname="Read"
-                    onShelfChange={
-                      (book, shelf) => this.onShelfChangeHandler(book, shelf)}/>
+                  {Object.keys(this.shelves).map((sh) =>
+                    <ListShelf
+                      key = {sh}
+                      books={this.state.books}
+                      bookshelf={this.shelves[sh][1]}
+                      shelfname ={this.shelves[sh][0]}
+                      onShelfChange={
+                        (book, shelf) => this.onShelfChangeHandler(book, shelf)}
+                    />
+                  )}
                 </div>
               </div>
             </div>

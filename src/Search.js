@@ -25,8 +25,9 @@ class Search extends Component {
           if(searchResults.error){
             this.setState({emptyResult: true})
           }else{
+            /* this map snippet was modified from Jonny on Slack */
             searchResults.map(result => {
-              const book = this.props.books.find(b => b.id === result.id);
+              const book = this.props.books.find((b) => (b.id === result.id));
               if (book) result.shelf = book.shelf;
               return result;
             })
